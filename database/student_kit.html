@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab Kit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="kit-page">
+
+  <div class="header-section">
+    <div class="title-box">
+        <h1>LAB KIT INFORMATION</h1>
+    </div>
+
+    <div class="subtitle-box">
+        <h2>Course: Digital Logic Design</h2>
+    </div>
+</div>
+
+    <div class="kit-container">
+
+        <div class="item">
+            <h3>Resistor</h3>
+            <img src="images/resistor.png" alt="Resistor">
+            <p>Controls current in a circuit.</p>
+            <p>Per kit: 5 resistors</p>
+        </div>
+
+        <div class="item">
+            <h3>Breadboard</h3>
+            <img src="images/breadboard.png" alt="Resistor">
+            <p>Used to build circuits without soldering.</p>
+            <p>Per kit: 1 breadboard</p>
+        </div>
+
+        <div class="item">
+            <h3>LED</h3>
+            <img src="images/ledlight.png" alt="Resistor">
+            <p>Light emitting diode.</p>
+            <p>Per kit: 3 Red | 3 Yellow | 3 Green.</p>
+            
+        </div>
+
+    </div>
+
+    <div class="buttons">
+        <button class="confirm" onclick="confirmKit()">
+    Confirm Kit Complete
+</button>
+        <button class="request" onclick="location.href='request_form.html'">
+             Request Missing Part
+        </button>
+    </div>
+<script>
+function confirmKit() {
+    alert(" Kit confirmed successfully!");
+}
+</script>
+</body>
+</html>
