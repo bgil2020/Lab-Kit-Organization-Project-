@@ -1,0 +1,276 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: white;
+    min-height: 100vh;
+}
+
+/******************** PAGE BACKGROUNDS ************************/
+.home-page {
+    background: linear-gradient(
+        rgba(51, 28, 66, 0.6),
+        rgba(62, 53, 28, 0.792)
+    ),
+    url("images/index.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.kit-page {
+    background: linear-gradient(
+        rgba(87, 106, 122, 0.55),
+        rgba(104, 79, 79, 0.65)
+    ),
+    url("images/fau_mosaic.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.form-page {
+    background: linear-gradient(
+        rgba(21, 39, 54, 0.7),
+        rgba(38, 14, 14, 0.8)
+    ),
+    url("images/missingpart.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+/******************* HEADER SECTION ********************/
+.header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/******************* HEADINGS ********************/
+h1 {
+    margin: 0;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/******************* TITLE BOX ********************/
+.title-box {
+    display: inline-block;
+    padding: 12px 28px;
+    margin-top: 25px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/******************* SUBTITLE BOX ********************/
+.subtitle-box {
+    display: inline-block;
+    padding: 10px 22px;
+    margin-top: 14px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+/*************** KIT CONTAINER ********************/
+.kit-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+    padding: 25px;
+}
+
+/***************** ITEM CARDS **********************/
+.item {
+    background: rgba(141, 207, 251, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white;
+    padding: 18px;
+    border-radius: 12px;
+    width: 220px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.4);
+}
+
+.item h3 {
+    margin-top: 0;
+    margin-bottom: 14px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.item p {
+    margin: 10px 0;
+    font-size: 18px;
+    line-height: 1.35;
+}
+
+/********************* IMAGES **************************/
+img {
+    width: 150px;
+    height: auto;
+    margin: 10px 0 16px;
+}
+
+/******************** BUTTON SECTION ********************/
+.buttons {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/********************* BUTTON BASE **********************/
+button {
+    padding: 16px 32px;
+    margin: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: 600;
+    transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.04);
+}
+
+/********************* BUTTON TYPES **********************/
+.confirm {
+    background-color: #03ff3e;
+    color: white;
+}
+
+.confirm:hover {
+    background-color: #27ae60;
+}
+
+.request {
+    background-color: #ff1900;
+    color: white;
+}
+
+.request:hover {
+    background-color: #c0392b;
+}
+
+/********************* FORM CONTAINER ********************/
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+
+/********************* HOME CONTAINER ********************/
+.home-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+/********************* FORM INPUTS **********************/
+input,
+select,
+textarea {
+    width: 300px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/********************* TEXTAREA **********************/
+textarea {
+    height: 130px;
+    resize: none;
+}
+
+/********************* SUCCESS MESSAGE **********************/
+#message {
+    margin-top: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 17px;
+}
+
+/********************* RESPONSIVE DESIGN **********************/
+@media (max-width: 768px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .title-box {
+        padding: 10px 20px;
+        margin-top: 20px;
+    }
+
+    .subtitle-box {
+        padding: 8px 18px;
+    }
+
+    .kit-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        padding: 20px;
+    }
+
+    .item {
+        width: 85%;
+        max-width: 300px;
+    }
+
+    img {
+        width: 130px;
+    }
+
+    button {
+        font-size: 17px;
+        width: 85%;
+        max-width: 320px;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 85%;
+        max-width: 320px;
+    }
+}
