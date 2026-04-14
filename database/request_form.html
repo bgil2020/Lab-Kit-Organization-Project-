@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Missing Part</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="form-page">
+
+    <h1>Request Missing Part</h1>
+
+    <form class="form-container" onsubmit="submitForm(event)">
+
+    <input type="text" placeholder="Student Name" required>
+
+    <input type="text" placeholder="Z Number (Z12345678)" pattern="Z\d{8}" maxlength="9" required>
+
+    <input type="text" value="Digital Logic Design" readonly>
+
+   
+<select required>
+    <option value="">Select Part</option>
+    <option value="resistor">Resistor</option>
+    <option value="breadboard">Breadboard</option>
+    <option value="led">LED</option>
+</select>
+
+ <select required>
+    <option value="">Issue Type</option>
+    <option value="missing">Missing</option>
+    <option value="damaged">Damaged</option>
+    <option value="wrong">Wrong Item</option>
+</select>
+
+    <textarea placeholder="Describe the issue (optional)"></textarea>
+
+    <button type="submit">Submit Request</button>
+
+</form>
+
+    <p id="message"></p>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            document.getElementById("message").textContent = "Request submitted successfully!";
+        }
+    </script>
+
+</body>
+</html>
