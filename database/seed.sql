@@ -1,16 +1,14 @@
--- ============================================================
 -- Lab Kit Organization System — Seed Data
 -- Run AFTER schema.sql
 -- Passwords are hashed with werkzeug (pbkdf2:sha256)
 -- Plain-text equivalents shown in comments for dev use only
--- ============================================================
+
 
 PRAGMA foreign_keys = ON;
 
--- ------------------------------------------------------------
 -- USERS
 -- password for all seed accounts: "password123"
--- ------------------------------------------------------------
+
 INSERT OR IGNORE INTO users
     (username, password_hash, email, first_name, last_name, role, student_id, major, employee_id, department)
 VALUES
@@ -40,39 +38,39 @@ VALUES
     -- Students
     ('n.gopeesingh',
      'pbkdf2:sha256:600000$abc123$hashedvalue5',
-     'nicholas.g@fau.edu', 'Nicholas', 'Gopeesingh', 'student',
+     'ngopeesingh2014@fau.edu', 'Nicholas', 'Gopeesingh', 'student',
      'S001', 'Computer Science', NULL, NULL),
 
     ('j.dormelus',
      'pbkdf2:sha256:600000$abc123$hashedvalue6',
-     'jeremy.d@fau.edu', 'Jeremy', 'Dormelus', 'student',
+     'jdormelus@fau.edu', 'Jeremy', 'Dormelus', 'student',
      'S002', 'Computer Science', NULL, NULL),
 
     ('j.pena',
      'pbkdf2:sha256:600000$abc123$hashedvalue7',
-     'juan.p@fau.edu', 'Juan', 'Pena', 'student',
+     'jpena@fau.edu', 'Juan', 'Pena', 'student',
      'S003', 'Computer Science', NULL, NULL),
 
     ('k.campbell',
      'pbkdf2:sha256:600000$abc123$hashedvalue8',
      'kyle.c@fau.edu', 'Kyle', 'Campbell', 'student',
-     'S004', 'Electrical Engineering', NULL, NULL);
+     'S004', 'Computer Science', NULL, NULL);
 
--- ------------------------------------------------------------
+
 -- COURSES
 -- instructor_id 2 = prof.smith, 3 = prof.jones
--- ------------------------------------------------------------
+
 INSERT OR IGNORE INTO courses (course_name, course_code, instructor_id, semester)
 VALUES
     ('Introduction to Circuits',      'EEL3111', 2, 'Spring 2026'),
     ('Digital Logic Design',          'EEL3701', 2, 'Spring 2026'),
     ('Embedded Systems',              'CDA4630', 3, 'Spring 2026'),
-    ('Software Engineering',          'CEN4010', 3, 'Spring 2026');
+    ('Prin. Software Engineering',          'CEN4010', 3, 'Spring 2026');
 
--- ------------------------------------------------------------
+
 -- LAB KITS
 -- course_id: 1=EEL3111, 2=EEL3701, 3=CDA4630, 4=CEN4010
--- ------------------------------------------------------------
+
 INSERT OR IGNORE INTO lab_kits (kit_name, description, course_id, status)
 VALUES
     ('Circuits Kit A',      'Resistors, capacitors, breadboard, DMM leads',   1, 'available'),
@@ -167,12 +165,12 @@ VALUES
      'Set up Arduino IDE, blink an LED, and read a sensor value over serial.',
      6, '2026-04-22 23:59:59');
 
--- ------------------------------------------------------------
+
 -- DAMAGE REPORTS
 -- component 15 = Digital Logic Kit B NAND gate (damaged)
 -- component 17 = Digital Logic Kit B breadboard (damaged)
 -- reported_by 5=nicholas
--- ------------------------------------------------------------
+
 INSERT OR IGNORE INTO damage_reports (component_id, reported_by, description, status)
 VALUES
     (15, 5, 'NAND gate IC appears burnt, one pin is bent and broken off.', 'open'),
