@@ -1,16 +1,13 @@
--- ============================================================
 -- Lab Kit Organization System — Database Schema
--- CEN 4010 | FAU
--- ============================================================
+-- CEN 4010 
 
 PRAGMA foreign_keys = ON;
 
--- ------------------------------------------------------------
 -- USERS
 -- Flattened from the class hierarchy (Student, Instructor,
 -- LabManager, Admin all stored in one table with a role column)
 -- Role-specific fields are nullable
--- ------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS users (
     user_id       INTEGER PRIMARY KEY AUTOINCREMENT,
     username      TEXT    NOT NULL UNIQUE,
@@ -30,9 +27,9 @@ CREATE TABLE IF NOT EXISTS users (
     department    TEXT
 );
 
--- ------------------------------------------------------------
+
 -- COURSES
--- ------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS courses (
     course_id     INTEGER PRIMARY KEY AUTOINCREMENT,
     course_name   TEXT    NOT NULL,
@@ -43,9 +40,9 @@ CREATE TABLE IF NOT EXISTS courses (
     FOREIGN KEY (instructor_id) REFERENCES users(user_id) ON DELETE RESTRICT
 );
 
--- ------------------------------------------------------------
+
 -- LAB KITS
--- ------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS lab_kits (
     kit_id      INTEGER PRIMARY KEY AUTOINCREMENT,
     kit_name    TEXT    NOT NULL,
@@ -57,9 +54,9 @@ CREATE TABLE IF NOT EXISTS lab_kits (
     FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE SET NULL
 );
 
--- ------------------------------------------------------------
+
 -- KIT COMPONENTS
--- ------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS kit_components (
     component_id   INTEGER PRIMARY KEY AUTOINCREMENT,
     kit_id         INTEGER NOT NULL,
@@ -72,9 +69,9 @@ CREATE TABLE IF NOT EXISTS kit_components (
     FOREIGN KEY (kit_id) REFERENCES lab_kits(kit_id) ON DELETE CASCADE
 );
 
--- ------------------------------------------------------------
+
 -- CHECKOUTS
--- ------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS checkouts (
     checkout_id   INTEGER PRIMARY KEY AUTOINCREMENT,
     kit_id        INTEGER NOT NULL,
@@ -91,9 +88,9 @@ CREATE TABLE IF NOT EXISTS checkouts (
     FOREIGN KEY (processed_by) REFERENCES users(user_id)   ON DELETE SET NULL
 );
 
--- ------------------------------------------------------------
+
 -- LAB ASSIGNMENTS
--- ------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS lab_assignments (
     assignment_id   INTEGER PRIMARY KEY AUTOINCREMENT,
     course_id       INTEGER NOT NULL,
@@ -106,9 +103,9 @@ CREATE TABLE IF NOT EXISTS lab_assignments (
     FOREIGN KEY (required_kit_id) REFERENCES lab_kits(kit_id)     ON DELETE SET NULL
 );
 
--- ------------------------------------------------------------
+
 -- INVENTORY (single-row summary table, updated via triggers)
--- ------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS inventory (
     inventory_id   INTEGER PRIMARY KEY AUTOINCREMENT,
     total_kits     INTEGER NOT NULL DEFAULT 0,
@@ -120,9 +117,9 @@ CREATE TABLE IF NOT EXISTS inventory (
 INSERT OR IGNORE INTO inventory (inventory_id, total_kits, available_kits)
 VALUES (1, 0, 0);
 
--- ------------------------------------------------------------
+
 -- DAMAGE REPORTS
--- ------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS damage_reports (
     report_id    INTEGER PRIMARY KEY AUTOINCREMENT,
     component_id INTEGER NOT NULL,
@@ -136,9 +133,9 @@ CREATE TABLE IF NOT EXISTS damage_reports (
     FOREIGN KEY (reported_by)  REFERENCES users(user_id)               ON DELETE RESTRICT
 );
 
--- ============================================================
+
 -- TRIGGERS — keep inventory counts in sync automatically
--- ============================================================
+
 
 -- When a new kit is added, increment total and available
 CREATE TRIGGER IF NOT EXISTS trg_kit_insert
