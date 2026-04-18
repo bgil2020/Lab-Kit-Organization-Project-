@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}{{ kit.kit_name }}{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <a href="{{ url_for('list_kits') }}" class="back-link">← Back to Kits</a>
+        <h2>{{ kit.kit_name }}</h2>
+        <span class="status-badge status-{{ kit.status | lower | replace(' ', '-') }}">{{ kit.status }}</span>
+    </div>
+
+    {% if session.role == 'Student' and kit.status == 'Available' %}
+    <form action="{{ url_for('request_checkout', kit_id=kit.kit_id) }}" method="POST">
+        <button type="submit" class="btn btn-primary">Request Checkout</button>
+    </form>
+    {% endif %}
+</div>
+
+<p class="kit-description">{{ kit.description or 'No description provided.' }}</p>
+
+<div class="section-header" style="margin-top: 2rem;">
+    <h3>Components ({{ components | length }})</h3>
+</div>
+
+{% if components %}
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Component</th>
+                <th>Quantity</th>
+                <th>Condition</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comp in components %}
+            <tr>
+                <td class="text-muted">{{ loop.index }}</td>
+                <td><strong>{{ comp.component_name }}</strong></td>
+                <td>{{ comp.quantity }}</td>
+                <td>
+                    <span class="condition-badge condition-{{ comp.condition | lower }}">
+                        {{ comp.condition }}
+                    </span>
+                </td>
+                <td class="text-muted">{{ comp.description or '—' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No components listed for this kit yet.</p>
+</div>
+{% endif %}
+
+{% if session.role in ['Student', 'LabManager'] %}
+<div style="margin-top: 1.5rem;">
+    <a href="{{ url_for('damage_report') }}" class="btn btn-secondary">Report a Damaged Component</a>
+</div>
+{% endif %}
+
+{% endblock %}

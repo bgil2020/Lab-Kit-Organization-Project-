@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Browse Kits{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>Lab Kits</h2>
+    <p>Browse and request available kits</p>
+</div>
+
+{% if kits %}
+<div class="kit-grid">
+    {% for kit in kits %}
+    <div class="kit-card">
+        <div class="kit-card-header">
+            <span class="kit-name">{{ kit.kit_name }}</span>
+            <span class="status-badge status-{{ kit.status | lower | replace(' ', '-') }}">
+                {{ kit.status }}
+            </span>
+        </div>
+
+        <p class="kit-desc">{{ kit.description or 'No description provided.' }}</p>
+
+        <div class="kit-card-footer">
+            <a href="{{ url_for('kit_detail', kit_id=kit.kit_id) }}" class="btn btn-sm btn-outline">
+                View Components
+            </a>
+
+            {% if session.role == 'Student' and kit.status == 'Available' %}
+            <form action="{{ url_for('request_checkout', kit_id=kit.kit_id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-sm btn-primary">Request Checkout</button>
+            </form>
+            {% elif kit.status != 'Available' %}
+            <span class="text-muted">Unavailable</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No kits found in the system.</p>
+</div>
+{% endif %}
+
+{% endblock %}

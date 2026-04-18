@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Lab Kit System{% endblock %} — FAU</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% if session.user_id %}
+<nav class="navbar">
+    <div class="nav-brand">
+        <span class="nav-logo">⚙</span>
+        FAU Lab Kit System
+    </div>
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('list_kits') }}" class="nav-link">Browse Kits</a>
+        <a href="{{ url_for('damage_report') }}" class="nav-link">Report Damage</a>
+        <div class="nav-divider"></div>
+        <span class="nav-user">{{ session.username }} <span class="role-badge role-{{ session.role | lower }}">{{ session.role }}</span></span>
+        <a href="{{ url_for('logout') }}" class="nav-link nav-logout">Logout</a>
+    </div>
+</nav>
+{% endif %}
+
+<main class="container">
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+</main>
+
+</body>
+</html>

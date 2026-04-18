@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>Dashboard</h2>
+    <p>Welcome back, <strong>{{ session.username }}</strong></p>
+</div>
+
+<!-- ── STUDENT VIEW ─────────────────────────────────────────────────────────── -->
+{% if role == 'Student' %}
+
+<div class="section-header">
+    <h3>Your Active Checkouts</h3>
+    <a href="{{ url_for('list_kits') }}" class="btn btn-primary">Browse Kits</a>
+</div>
+
+{% if checkouts %}
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Kit Name</th>
+                <th>Checkout Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in checkouts %}
+            <tr>
+                <td>{{ c.kit_name }}</td>
+                <td>{{ c.checkout_date }}</td>
+                <td>{{ c.due_date or '—' }}</td>
+                <td><span class="status-badge status-{{ c.status | lower }}">{{ c.status }}</span></td>
+                <td>
+                    {% if c.status != 'Returned' %}
+                    <form action="{{ url_for('return_kit', checkout_id=c.checkout_id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-secondary">Return Kit</button>
+                    </form>
+                    {% else %}
+                        <span class="text-muted">Returned</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>You have no active checkouts.</p>
+    <a href="{{ url_for('list_kits') }}" class="btn btn-primary">Find a Kit</a>
+</div>
+{% endif %}
+
+<!-- ── LAB MANAGER / ADMIN VIEW ─────────────────────────────────────────────── -->
+{% elif role in ['LabManager', 'Admin'] %}
+
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-number">{{ kits | length }}</div>
+        <div class="stat-label">Total Kits</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ kits | selectattr('status', 'equalto', 'Available') | list | length }}</div>
+        <div class="stat-label">Available</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ kits | selectattr('status', 'equalto', 'Checked Out') | list | length }}</div>
+        <div class="stat-label">Checked Out</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ pending | length }}</div>
+        <div class="stat-label">Pending Requests</div>
+    </div>
+</div>
+
+{% if pending %}
+<div class="section-header">
+    <h3>Pending Checkout Requests</h3>
+</div>
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Kit</th>
+                <th>Requested</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in pending %}
+            <tr>
+                <td>{{ p.first_name }} {{ p.last_name }}</td>
+                <td>{{ p.kit_name }}</td>
+                <td>{{ p.checkout_date }}</td>
+                <td>
+                    <form action="{{ url_for('return_kit', checkout_id=p.checkout_id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-primary">Approve</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<div class="section-header" style="margin-top: 2rem;">
+    <h3>All Lab Kits</h3>
+    <a href="{{ url_for('list_kits') }}" class="btn btn-secondary">View All</a>
+</div>
+<div class="kit-grid">
+    {% for kit in kits %}
+    <div class="kit-card">
+        <div class="kit-card-header">
+            <span class="kit-name">{{ kit.kit_name }}</span>
+            <span class="status-badge status-{{ kit.status | lower | replace(' ', '-') }}">{{ kit.status }}</span>
+        </div>
+        <p class="kit-desc">{{ kit.description or 'No description.' }}</p>
+        <a href="{{ url_for('kit_detail', kit_id=kit.kit_id) }}" class="btn btn-sm btn-outline">View Details</a>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- ── INSTRUCTOR VIEW ──────────────────────────────────────────────────────── -->
+{% elif role == 'Instructor' %}
+
+<div class="empty-state">
+    <p>Instructor dashboard coming soon.</p>
+    <a href="{{ url_for('list_kits') }}" class="btn btn-primary">Browse Kits</a>
+</div>
+
+{% endif %}
+
+{% endblock %}
