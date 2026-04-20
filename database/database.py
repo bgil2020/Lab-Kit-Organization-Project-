@@ -20,9 +20,9 @@ SCHEMA    = os.path.join(BASE_DIR, 'schema.sql')
 SEED      = os.path.join(BASE_DIR, 'seed.sql')
 
 
-# ------------------------------------------------------------------ #
-#  Connection helpers                                                  #
-# ------------------------------------------------------------------ #
+
+#  Connection helpers                                                  
+
 
 def get_db():
     """
@@ -47,9 +47,9 @@ def close_db(e=None):
         db.close()
 
 
-# ------------------------------------------------------------------ #
-#  Initialization                                                      #
-# ------------------------------------------------------------------ #
+
+#  Initialization                                                      
+
 
 def init_db(seed=False):
     """
@@ -79,9 +79,7 @@ def init_app(app):
     app.teardown_appcontext(close_db)
 
 
-# ------------------------------------------------------------------ #
-#  Query helpers                                                       #
-# ------------------------------------------------------------------ #
+#  Query helpers                                                       
 
 def query_db(sql, args=(), one=False):
     """
@@ -120,9 +118,7 @@ def execute_db(sql, args=()):
     return cur.lastrowid
 
 
-# ------------------------------------------------------------------ #
-#  Convenience functions — Users                                       #
-# ------------------------------------------------------------------ #
+#  Convenience functions — Users                                       
 
 def get_user_by_id(user_id):
     return query_db("SELECT * FROM users WHERE user_id = ?", (user_id,), one=True)
@@ -144,9 +140,7 @@ def create_user(username, password_hash, email, first_name, last_name, role,
     )
 
 
-# ------------------------------------------------------------------ #
-#  Convenience functions — Lab Kits                                    #
-# ------------------------------------------------------------------ #
+#  Convenience functions — Lab Kits                                    
 
 def get_all_kits():
     return query_db("SELECT * FROM lab_kits ORDER BY kit_id")
@@ -171,9 +165,7 @@ def update_kit_status(kit_id, status):
     execute_db("UPDATE lab_kits SET status = ? WHERE kit_id = ?", (status, kit_id))
 
 
-# ------------------------------------------------------------------ #
-#  Convenience functions — Checkouts                                   #
-# ------------------------------------------------------------------ #
+#  Convenience functions — Checkouts                                   
 
 def get_checkout_by_id(checkout_id):
     return query_db("SELECT * FROM checkouts WHERE checkout_id = ?", (checkout_id,), one=True)
@@ -236,9 +228,7 @@ def complete_return(checkout_id, processed_by):
     update_kit_status(checkout['kit_id'], 'available')
 
 
-# ------------------------------------------------------------------ #
-#  Convenience functions — Damage Reports                             #
-# ------------------------------------------------------------------ #
+#  Convenience functions — Damage Reports                             
 
 def create_damage_report(component_id, reported_by, description):
     report_id = execute_db(
@@ -267,17 +257,13 @@ def get_open_damage_reports():
     )
 
 
-# ------------------------------------------------------------------ #
-#  Convenience functions — Inventory                                   #
-# ------------------------------------------------------------------ #
+#  Convenience functions — Inventory                                   
 
 def get_inventory():
     return query_db("SELECT * FROM inventory WHERE inventory_id = 1", one=True)
 
 
-# ------------------------------------------------------------------ #
-#  Convenience functions — Courses & Assignments                       #
-# ------------------------------------------------------------------ #
+#  Convenience functions — Courses & Assignments                       
 
 def get_courses_by_instructor(instructor_id):
     return query_db(
